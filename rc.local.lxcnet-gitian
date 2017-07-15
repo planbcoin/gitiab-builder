@@ -1,0 +1,10 @@
+#marker_gitian_lxc_is_added_here
+# start of gitian lxc (script itself)
+# brctl addbr br0 
+sudo ifconfig br0 create
+sudo ifconfig br0 addm en0 addm en1
+sudo ifconfig br0 up
+ifconfig br0 10.0.3.2/24 up
+#iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+$echo 1 > /proc/sys/net/ipv4/ip_forward
+# end of gitian lxc
