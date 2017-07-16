@@ -22,14 +22,14 @@ if len(sys.argv) == 1:
   vers = map(int, ver.split('.'))
   vers[2] += 1
   run('cd ../planbcoin; sed -i -E "s/(_CLIENT_VERSION_REVISION,) [0-9]+/\\1 {}/" configure.ac'.format(vers[2]))
+  run('cd ../planbcoin; git commit -am set_ver_$VERSION')
   vers = map(str, vers)
   ver = '.'.join(vers)
 
   os.environ['VERSION'] = ver
 
   run('cd ../planbcoin; git tag -s v$VERSION -m latest')
-  run('git commit -am set_ver_$VERSION')
-  run('cd ../planbcoin; git push origin --tags')
+  run('cd ../planbcoin; git push origin master --tags')
 
 run('cd inputs; rm -rf planbcoin')
 run('cd inputs; cp -r ../../planbcoin .')
