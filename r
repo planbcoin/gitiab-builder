@@ -10,8 +10,9 @@ def run(cmd):
 
 ver = open('version').read().strip()
 os.environ['VERSION'] = ver
-# skip bumping ver
+
 if sys.argv == 1:
+  print 'bumping version to', ver
   vers = map(int, ver.split('.'))
   vers[2] += 1
   vers = map(str, vers)
