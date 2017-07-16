@@ -21,7 +21,9 @@ if len(sys.argv) == 1:
   print 'bumping version to', ver
   vers = map(int, ver.split('.'))
   vers[2] += 1
+  print 'cd ../planbcoin; sed -i -E "s/(_CLIENT_VERSION_REVISION, )[0-9]+/\\1{}/" configure.ac'.format(vers[2])
   run('cd ../planbcoin; sed -i -E "s/(_CLIENT_VERSION_REVISION, )[0-9]+/\\1{}/" configure.ac'.format(vers[2]))
+  exit()
   vers = map(str, vers)
   ver = '.'.join(vers)
 
