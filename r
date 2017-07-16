@@ -11,7 +11,7 @@ def run(cmd):
 ver = open('version').read().strip()
 os.environ['VERSION'] = ver
 
-if sys.argv == 1:
+if len(sys.argv) == 1:
   print 'bumping version to', ver
   vers = map(int, ver.split('.'))
   vers[2] += 1
