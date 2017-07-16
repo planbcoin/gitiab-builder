@@ -7,8 +7,13 @@ import subprocess
 def run(cmd):
   subprocess.Popen(cmd, shell=True).wait()
 
+def get(cmd):
+  p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+  out, err = p.communicate()
+  return out
 
-ver = open('version').read().strip()
+
+ver = get('cd ../planbcoin && git describe --abbrev=0').strip().replace('v', '', 1)
 os.environ['VERSION'] = ver
 
 if len(sys.argv) == 1:
@@ -17,15 +22,15 @@ if len(sys.argv) == 1:
   vers[2] += 1
   vers = map(str, vers)
   ver = '.'.join(vers)
-  with open('version', 'w') as f:
-    f.write(ver)
 
   os.environ['VERSION'] = ver
 
   run('cd ../planbcoin; git tag -s v$VERSION -m latest')
+  run('git commit -am set_ver_$VERSION')
   run('cd ../planbcoin; git push origin --tags')
 
 run('cd inputs; rm -rf planbcoin')
 run('cd inputs; cp -r ../../planbcoin .')
 
 run('./bin/gbuild --commit planbcoin=v$VERSION --url planbcoin=../planbcoin,signature=../gitian.sigs ../planbcoin/contrib/gitian-descriptors/gitian-osx.yml')
+run('scp -i ./var/id_rsa -P 2223 root@localhost:/home/ubuntu/out/*.dmg /tmp/')
