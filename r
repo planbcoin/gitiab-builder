@@ -13,7 +13,7 @@ def get(cmd):
   return out
 
 
-ver = get('cd ../planbcoin && git pull && git describe --abbrev=0').strip().replace('v', '', 1)
+ver = get('cd ../planbcoin && git pull origin master && git describe --abbrev=0').strip().replace('v', '', 1)
 os.environ['VERSION'] = ver
 
 if len(sys.argv) == 1:
