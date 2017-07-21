@@ -16,6 +16,7 @@ def get(cmd):
 run('cd ../planbcoin && git pull --no-edit')
 ver = get('cd ../planbcoin && git describe --abbrev=0').strip().replace('v', '', 1)
 os.environ['VERSION'] = ver
+platform = sys.argv[1]
 
 if len(sys.argv) == 1:
   print 'bumping version to', ver
@@ -34,6 +35,6 @@ if len(sys.argv) == 1:
 run('cd inputs; rm -rf planbcoin')
 run('cd inputs; cp -r ../../planbcoin .')
 
-run('./bin/gbuild --commit planbcoin=v$VERSION --url planbcoin=../planbcoin,signature=../gitian.sigs ../planbcoin/contrib/gitian-descriptors/gitian-osx.yml')
+run('./bin/gbuild --commit planbcoin=v$VERSION --url planbcoin=../planbcoin,signature=../gitian.sigs ../planbcoin/contrib/gitian-descriptors/gitian-{}.yml'.format(platform))
 run('rm ~/Downloads/planbcoin*.dmg')
 run('scp -i ./var/id_rsa -P 2223 root@localhost:/home/ubuntu/out/*.dmg ~/Downloads')
