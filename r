@@ -37,4 +37,6 @@ run('cd inputs; cp -r ../../planbcoin .')
 
 run('./bin/gbuild --commit planbcoin=v$VERSION --url planbcoin=../planbcoin,signature=../gitian.sigs ../planbcoin/contrib/gitian-descriptors/gitian-{}.yml'.format(platform))
 run('rm ~/Downloads/planbcoin*.dmg')
+run('rm ~/Downloads/planbcoin*.tar.gz')
 run('scp -i ./var/id_rsa -P 2223 root@localhost:/home/ubuntu/out/*.dmg ~/Downloads')
+run('scp -i ./var/id_rsa -P 2223 root@localhost:/home/ubuntu/out/*.tar.gz ~/Downloads')
