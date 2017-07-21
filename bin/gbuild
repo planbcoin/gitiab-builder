@@ -94,11 +94,11 @@ EOF" if build_desc["sudo"] and @options[:allow_sudo]
     end
   end
 
-  # info "Updating apt-get repository (log in var/install.log)"
-  # system! "on-target -u root apt-get update > var/install.log 2>&1"
+  info "Updating apt-get repository (log in var/install.log)"
+  system! "on-target -u root apt-get update > var/install.log 2>&1"
 
-  # info "Installing additional packages (log in var/install.log)"
-  # system! "on-target -u root -e DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -y install #{build_desc["packages"].join(" ")} > var/install.log 2>&1"
+  info "Installing additional packages (log in var/install.log)"
+  system! "on-target -u root -e DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -y install #{build_desc["packages"].join(" ")} > var/install.log 2>&1"
 
   if @options[:upgrade] || system("on-target -u root '[ ! -e /var/cache/gitian/initial-upgrade ]'")
       info "Upgrading system, may take a while"
